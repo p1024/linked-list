@@ -38,17 +38,11 @@ describe('class::LinkedList', function () {
 
 		it('should not get the node out of range', function () {
 			// floor
-			try {
+			assert.throws(()=>{
 				linkedList.get(-1);
-			} catch(e) {
-				assert.ok(e.message === 'illegal range', 'not equal');
-			}
+			},/illegal range/);
 			// ceil
-			try {
-				linkedList.get(len);
-			} catch(e) {
-				assert.ok(e.message === 'illegal range', 'not equal');
-			}
+			assert.ok(linkedList.get(len)===void 0, 'result of get is not undefined');
 		});
 	});
 
@@ -75,6 +69,15 @@ describe('class::LinkedList', function () {
 			assert.ok(removeNode === nodeList[idx], 'delete node is not the correct node');
 			let leftNodeList= nodeList.filter(node=>!linkedList.nodeList.includes(node));
 			assert.ok(leftNodeList.length === 1 && leftNodeList[0] === removeNode, 'not only the removed node')
+		});
+
+		it('should throw error when index out of range', function () {
+			assert.throws(()=>{
+				linkedList.remove(-1);
+			},/out of range/);
+			assert.throws(()=>{
+				linkedList.remove(len+1);
+			},/out of range/);
 		});
 	});
 
